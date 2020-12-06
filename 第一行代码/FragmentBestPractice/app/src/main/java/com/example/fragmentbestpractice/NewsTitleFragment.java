@@ -9,9 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NewsTitleFragment extends Fragment {
     private boolean isTwoPane;
@@ -20,7 +23,33 @@ public class NewsTitleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news_title_frag, container, false);
+        RecyclerView newsTitleRecyclerView = (RecyclerView) view.findViewById(R.id.news_title_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        newsTitleRecyclerView.setLayoutManager(layoutManager);
+        NewsAdapter adapter = new NewsAdapter(getNews());
+        newsTitleRecyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private List<News> getNews() {
+        List<News> newsList = new ArrayList<>();
+        for (int i = 1; i < 50; i++) {
+            News news = new News();
+            news.setTitle("This is news title " + i);
+            news.setContent(getRandomLengthContent("This is news content " + i + ". "));
+            newsList.add(news);
+        }
+        return newsList;
+    }
+
+    private String getRandomLengthContent(String content) {
+        Random random = new Random();
+        int length = random.nextInt(20) + 1;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            builder.append(content);
+        }
+        return builder.toString();
     }
 
     @Override
