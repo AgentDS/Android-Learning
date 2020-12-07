@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         FileInputStream in = null;
         BufferedReader reader = null;
         StringBuilder content = new StringBuilder();
+        
         try {
             in = openFileInput("data");
             reader = new BufferedReader(new InputStreamReader(in));
